@@ -19,25 +19,8 @@ angular.module('appSLM', ['ui.router'])
 		comun.resultados = {};
 		comun.oculta = false;
 		comun.codigo = "";
-
 		comun.twitter= {};
-		//comun.twitter.username = '';
 
-
-		/***Sección de métodos remotos***/
-/*
-		comun.processTwitter = function(twitter) {
-			//var route = "http://localhost:3000/twitter?name=" + comun.twitter.username;
-			$.get(route, function() {comun.oculta = true;})
-          	.done(function(data) {
-              console.log(data);
-              
-          	})
-          	.fail(function(err) {
-            	comun.resultados = "Algo salio mal";
-        	});
-		}
-*/
 		comun.processTwitter = function(twitter) {
 			return $http.get('http://localhost:3000/twitter?name=' + comun.twitter.username)
 			.success(function(data) {
@@ -72,7 +55,7 @@ angular.module('appSLM', ['ui.router'])
 			$scope.datosOk = false;
 			$scope.alerta1 = false;
 			$scope.twitter = {};
-			$scope.codigo = "";
+			$scope.codigo = ""; 
 		}
 
 		$scope.procesarTwitter = function() {
@@ -109,20 +92,10 @@ angular.module('appSLM', ['ui.router'])
     			results = regex.exec(location.search);
     		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     	}
-
-		// function getParameterByName(name) {
-  //   		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  //   		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-  //   			results = regex.exec(location.search);
-  //   		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-  //   	}
 	})
 	.controller('ctrlResults', function($scope, $state, comun) {
 		$scope.twitter = {};
 		$scope.twitter = comun.twitter;
 		$scope.codigo = comun.codigo;
 		$scope.resultados = comun.resultados;
-		//$scope.finalResults = {};
-		//$scope.finalResults = comun.resultados[finalResp];
-
 	})
