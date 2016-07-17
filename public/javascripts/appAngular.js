@@ -14,7 +14,10 @@ angular.module('appSLM', ['ui.router'])
 
         $urlRouterProvider.otherwise('login');
     })
-	.factory('comun', function($http) {
+    .constant('configuracionGlobal', {
+    	'api_url' : 'http://localhost:3000'
+    })
+	.factory('comun', function(configuracionGlobal, $http) {
 		var comun = {};
 		comun.resultados = {};
 		comun.oculta = false;
@@ -22,7 +25,7 @@ angular.module('appSLM', ['ui.router'])
 		comun.twitter= {};
 
 		comun.processTwitter = function(twitter) {
-			return $http.get('http://localhost:3000/twitter?name=' + comun.twitter.username)
+			return $http.get(configuracionGlobal.api_url + "/twitter?name=" + comun.twitter.username)
 			.success(function(data) {
 				angular.copy(data, comun.resultados);
 			return comun.resultados
@@ -33,7 +36,7 @@ angular.module('appSLM', ['ui.router'])
 		}
 
 		comun.obtenerResultado = function(codigo) {
-			return $http.get('http://localhost:3000/result?code=' + comun.codigo)
+			return $http.get(configuracionGlobal.api_url + "/result?code=" + comun.codigo)
 			.success(function(data) {
 				angular.copy(data, comun.resultados);
 			return comun.resultados
