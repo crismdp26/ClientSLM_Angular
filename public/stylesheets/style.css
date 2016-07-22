@@ -187,18 +187,6 @@ img {
 color: white !important;
 }
 
-.item {
-    border: 1px solid LightBlue;
-    border-radius: 5px;
-    padding: 10px;
-    color: #454545;
-    margin-top: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    text-transform: capitalize;
-}
-
 .mensajeEnvio {
     color: #1565C0;
     text-align: center;
@@ -206,4 +194,40 @@ color: white !important;
 
 .glyphicon-thumbs-up, .glyphicon-thumbs-down {
     cursor: pointer;
+}
+
+.youtube {
+    margin:0 5px;
+}
+
+.celdaVideo {
+    width: 240px;
+    display: inline-block;
+    margin: 15px;
+    vertical-align: top;
+}
+.ocultar {
+    opacity: 0.4;
+}
+.boxResult {
+    width: 90%;
+    top: 17.5%;
+    height: auto;
+    position: relative;
+}
+
+.item{
+    border-radius: 5px;
+    padding: 10px;
+    color: #454545;
+    margin-top: 10px;
+    margin-right: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    text-transform: capitalize;
+    border: 1px solid LightBlue;
+}
+.noclick {
+    cursor: text;
 }

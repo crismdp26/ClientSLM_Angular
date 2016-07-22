@@ -1,5 +1,5 @@
 angular.module('appSLM', ['ui.router'])
-	.config(function($stateProvider, $urlRouterProvider) {
+	.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
         $stateProvider
             .state('login', {
                 url: '/login',
@@ -11,6 +11,10 @@ angular.module('appSLM', ['ui.router'])
                 templateUrl: 'views/results.html',
                 controller: 'ctrlResults'
             });
+            $sceDelegateProvider.resourceUrlWhitelist([
+			    'self',
+			    'https://www.youtube.com/**'
+			  ]);
 
         $urlRouterProvider.otherwise('login');
     })
@@ -19,10 +23,11 @@ angular.module('appSLM', ['ui.router'])
     })
 	.factory('comun', function(configuracionGlobal, $http) {
 		var comun = {};
-		comun.resultados = {};
+		comun.resultados = [];
 		comun.oculta = false;
 		comun.codigo = "";
 		comun.twitter= {};
+		comun.videos = [];
 
 		comun.processTwitter = function(twitter) {
 			return $http.get(configuracionGlobal.api_url + "/twitter?name=" + comun.twitter.username)
@@ -38,8 +43,20 @@ angular.module('appSLM', ['ui.router'])
 		comun.obtenerResultado = function(codigo) {
 			return $http.get(configuracionGlobal.api_url + "/result?code=" + comun.codigo)
 			.success(function(data) {
-				angular.copy(data, comun.resultados);
-			return comun.resultados
+				angular.copy(data.finalResp, comun.resultados);
+
+				for (var i=0; i < comun.resultados.length; i++){
+					$http.get(configuracionGlobal.api_url + "/youtube?words=" + comun.resultados[i].cat)
+						.success(function(datos) {
+							angular.copy(datos, comun.videos);
+							// var aux = angular.copy(datos);   //probar
+							// comun.videos.push(aux);
+						})
+				}
+
+				comun.videos[0] = comun.resultados[0].cat;
+				
+				return comun.resultados
 			})
 		}
 
@@ -73,14 +90,7 @@ angular.module('appSLM', ['ui.router'])
 			$scope.alerta1 = true;
 		}
 
-		$scope.masPrioridad	= function() {
-
-		}
-
-		$scope.menosPrioridad	= function() {
-			
-		}
-
+		
 		$scope.mostrarResultados = function(codigo) {
 			comun.codigo = $scope.codigo;
 			comun.obtenerResultado($scope.codigo);
@@ -96,9 +106,22 @@ angular.module('appSLM', ['ui.router'])
     		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     	}
 	})
-	.controller('ctrlResults', function($scope, $state, comun) {
+	.controller('ctrlResults', function($scope, $state, comun, configuracionGlobal, $http) {
 		$scope.twitter = {};
 		$scope.twitter = comun.twitter;
 		$scope.codigo = comun.codigo;
 		$scope.resultados = comun.resultados;
+		$scope.videos = comun.videos;
+
+		$scope.masPrioridad	= function(_resultado) {
+			_resultado.ocultar = true;
+		}
+
+		$scope.menosPrioridad	= function(_resultado) {
+			_resultado.ocultar = true;
+		}
+		
+		$scope.getIframeSrc = function(src) {
+  			return 'https://www.youtube.com/embed/' + src;
+		}
 	})

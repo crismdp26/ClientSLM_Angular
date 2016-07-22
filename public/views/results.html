@@ -1,4 +1,4 @@
-<div class="container" style="height:100%;">
+<div class="container">
     <div class="mainBodyResults">
         <div class="container" style="height:100%;">
             <div class="boxResults panel panel-default">
@@ -16,24 +16,45 @@
                         <h1 class="text-center col-xs-7 col-sm-7 col-md-7 col-lg-7" style="margin-top: 20" ng-hide="twitter.username==''">Resultados para {{twitter.username}}!</h1>
                         
                     </div>
-                        <h3 align="center">Código: <b>{{codigo}}</b></h3><br>
-                        <div align="center">
-                            <p> <h3>
-                                   <!--  ZY4UX -->
-
-                                </h3>
-                                <h3>
-                                <div class="item"  ng-repeat="resultado in resultados.finalResp">
-                                        <span>Categoria: {{resultado.cat}} - Score: {{resultado.score}}  </span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up text-success"  ng-click="masPrioridad()"> </span>&nbsp;&nbsp; <span class="glyphicon glyphicon-thumbs-down text-danger" ng-click="menosPrioridad()"> </span></div>                            
-                                </h3>
-                            </p>
-                        </div>
+                    
+                    <div align="center">
+                               <!--  ZY4UX --> 
+                    <h3 align="center">Código: <b>{{codigo}}</b></h3>
+        <div>
+            <br>
+            <div class="boxResult panel panel-default">
+                <div class="divImage">
+                    <img src="/images/youtube.png">
+                </div>
+                <div class="textIntro">
+                    <h3 class="text-center">Videos que pueden ser de tu interés:</h3>
+                </div>
+                <div ng-repeat="video in videos | limitTo : 6" class="celdaVideo">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" ng-src="{{getIframeSrc(video)}}"></iframe>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="boxResult panel panel-default">
+                <div class="divImage">
+                    <img src="/images/logo.png">
+                </div>
+                <div class="textIntro">
+                    <h3 class="text-center">Ayudanos a conocerte mejor! Contanos cuáles temas son de tu interés:</h3>
+                </div>
+                <div  class="push-left well col-sm-3 item" ng-repeat="resultado in resultados" ng-class="{'ocultar' : resultado.ocultar}">
+                    <h4><span>{{resultado.cat}}</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up text-success" ng-class="{'noclick' : resultado.ocultar}" ng-click="masPrioridad(resultado)"> </span>&nbsp;&nbsp; <span class="glyphicon glyphicon-thumbs-down text-danger" ng-class="{'noclick' : resultado.ocultar}" ng-click="menosPrioridad(resultado)"></span></h4>
+                </div>
+            </div>
+        </div>
+                                                  
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <script>
     $.material.init()
