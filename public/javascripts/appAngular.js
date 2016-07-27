@@ -1,4 +1,4 @@
-angular.module('appSLM', ['ui.router'])
+angular.module('appSLM', ['ui.router', 'ngtweet'])
 	.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
         $stateProvider
             .state('login', {
@@ -28,6 +28,8 @@ angular.module('appSLM', ['ui.router'])
 		comun.codigo = "";
 		comun.twitter= {};
 		comun.videos = [];
+		comun.tweets = [];
+		comun.twitterUsers = [];
 
 		comun.processTwitter = function(twitter) {
 			return $http.get(configuracionGlobal.api_url + "/twitter?name=" + comun.twitter.username)
@@ -48,14 +50,24 @@ angular.module('appSLM', ['ui.router'])
 				for (var i=0; i < comun.resultados.length; i++){
 					$http.get(configuracionGlobal.api_url + "/youtube?words=" + comun.resultados[i].cat)
 						.success(function(datos) {
-							angular.copy(datos, comun.videos);
-							// var aux = angular.copy(datos);   //probar
-							// comun.videos.push(aux);
-						})
-				}
+							angular.forEach(datos, function(value, key) {
+  									comun.videos.push(value);
+  							})
+						});
+					$http.get(configuracionGlobal.api_url + "/buscarTweets?words=" + comun.resultados[i].cat)
+						.success(function(datos) {
+							angular.forEach(datos, function(value, key) {
+  									comun.tweets.push(value);
+  							})
+						});
+					$http.get(configuracionGlobal.api_url + "/buscarTwitterUsers?words=" + comun.resultados[i].cat)
+						.success(function(datos) {
+							angular.forEach(datos, function(value, key) {
+  									comun.twitterUsers.push(value);
+  							})
+						});
 
-				comun.videos[0] = comun.resultados[0].cat;
-				
+				}
 				return comun.resultados
 			})
 		}
@@ -112,6 +124,8 @@ angular.module('appSLM', ['ui.router'])
 		$scope.codigo = comun.codigo;
 		$scope.resultados = comun.resultados;
 		$scope.videos = comun.videos;
+		$scope.tweets = comun.tweets;
+		$scope.twitterUsers = comun.twitterUsers;
 
 		$scope.masPrioridad	= function(_resultado) {
 			_resultado.ocultar = true;
@@ -124,4 +138,5 @@ angular.module('appSLM', ['ui.router'])
 		$scope.getIframeSrc = function(src) {
   			return 'https://www.youtube.com/embed/' + src;
 		}
+
 	})

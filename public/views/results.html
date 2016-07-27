@@ -18,9 +18,36 @@
                     </div>
                     
                     <div align="center">
-                               <!--  ZY4UX --> 
+                               <!--  ZY4UX    EKILY     OY6GJ    NTKJ3   YFQ46--> 
                     <h3 align="center">Código: <b>{{codigo}}</b></h3>
         <div>
+            <br>
+            <div class="boxResult panel panel-default">
+                <div class="divImage">
+                    <img src="/images/twitter.png">
+                </div>
+                <div class="textIntro">
+                    <h3 class="text-center">Tweets que pueden ser de tu interés:</h3>
+                </div>
+                <div ng-repeat="tweetID in tweets | limitTo : 6" class="celdaVideo">
+                    <twitter-widget twitter-widget-id='tweetID'>
+                    </twitter-widget>   
+                </div>
+                 
+                 <div class="textIntro">
+                    <h3 class="text-center">Usuarios que comparten tus intereses:</h3>
+                </div>
+                <div class="table-responsive tabla">
+                    <table class="table">
+                        <tr ng-repeat="twitterUser in twitterUsers | limitTo : 4" class="active">
+                            <td>{{twitterUser.name}}</td>
+                            <td>{{twitterUser.description}}</td>
+                            <td><a href="https://twitter.com/intent/follow?screen_name={{twitterUser.screen_name}}" class="twitter-follow-button" data-size="large">Follow  @{{twitterUser.screen_name}}</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></td>            
+                    </table>
+                </div>
+                </div> 
+                               
+            </div>
             <br>
             <div class="boxResult panel panel-default">
                 <div class="divImage">
@@ -29,9 +56,9 @@
                 <div class="textIntro">
                     <h3 class="text-center">Videos que pueden ser de tu interés:</h3>
                 </div>
-                <div ng-repeat="video in videos | limitTo : 6" class="celdaVideo">
+                <div ng-repeat="video in videos | limitTo : 9" class="celdaVideo">
                     <div class="embed-responsive embed-responsive-4by3">
-                        <iframe class="embed-responsive-item" ng-src="{{getIframeSrc(video)}}"></iframe>
+                        <iframe class="embed-responsive-item" ng-src="{{getIframeSrc(video)}}" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -41,12 +68,13 @@
                     <img src="/images/logo.png">
                 </div>
                 <div class="textIntro">
-                    <h3 class="text-center">Ayudanos a conocerte mejor! Contanos cuáles temas son de tu interés:</h3>
+                    <h3 class="text-center">Ayudanos a conocerte mejor! Cuentanos cuáles temas son de tu interés:</h3>
                 </div>
-                <div  class="push-left well col-sm-3 item" ng-repeat="resultado in resultados" ng-class="{'ocultar' : resultado.ocultar}">
+                <div  class="celdaVideo well item" ng-repeat="resultado in resultados | limitTo : 6" ng-class="{'ocultar' : resultado.ocultar}">
                     <h4><span>{{resultado.cat}}</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up text-success" ng-class="{'noclick' : resultado.ocultar}" ng-click="masPrioridad(resultado)"> </span>&nbsp;&nbsp; <span class="glyphicon glyphicon-thumbs-down text-danger" ng-class="{'noclick' : resultado.ocultar}" ng-click="menosPrioridad(resultado)"></span></h4>
                 </div>
             </div>
+            <br><br>
         </div>
                                                   
                     </div>

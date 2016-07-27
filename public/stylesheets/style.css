@@ -231,3 +231,8 @@ color: white !important;
 .noclick {
     cursor: text;
 }
+.tabla {
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 4%;
+}
