@@ -30,6 +30,7 @@ angular.module('appSLM', ['ui.router', 'ngtweet'])
 		comun.videos = [];
 		comun.tweets = [];
 		comun.twitterUsers = [];
+		comun.flickr = [];
 
 		comun.processTwitter = function(twitter) {
 			return $http.get(configuracionGlobal.api_url + "/twitter?name=" + comun.twitter.username)
@@ -66,7 +67,14 @@ angular.module('appSLM', ['ui.router', 'ngtweet'])
   									comun.twitterUsers.push(value);
   							})
 						});
-
+					$http.get("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=fd7fb62030a07d340af641127d464664&tags=" + comun.resultados[i].cat + "&per_page=9&format=json&nojsoncallback=1")
+						.success(function(datos) {
+							angular.forEach(datos, function(value, key) {
+								for (var i=0; i < 5; i++){
+						            comun.flickr.push(value.photo[i]);
+						        }
+							})
+						});
 				}
 				return comun.resultados
 			})
@@ -126,6 +134,7 @@ angular.module('appSLM', ['ui.router', 'ngtweet'])
 		$scope.videos = comun.videos;
 		$scope.tweets = comun.tweets;
 		$scope.twitterUsers = comun.twitterUsers;
+		$scope.flickr = comun.flickr;
 
 		$scope.masPrioridad	= function(_resultado) {
 			_resultado.ocultar = true;

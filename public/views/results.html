@@ -24,7 +24,7 @@
             <br>
             <div class="boxResult panel panel-default">
                 <div class="divImage">
-                    <img src="/images/twitter.png">
+                    <img src="/images/twitter.png" alt="Twitter!" title="Twitter">
                 </div>
                 <div class="textIntro">
                     <h3 class="text-center">Tweets que pueden ser de tu interés:</h3>
@@ -46,26 +46,45 @@
                     </table>
                 </div>
                 </div> 
-                               
-            </div>
+                         <br>     
+    </div>
             <br>
             <div class="boxResult panel panel-default">
                 <div class="divImage">
-                    <img src="/images/youtube.png">
+                    <img src="/images/youtube.png" alt="YouTube!" title="YouTube">
                 </div>
                 <div class="textIntro">
                     <h3 class="text-center">Videos que pueden ser de tu interés:</h3>
                 </div>
-                <div ng-repeat="video in videos | limitTo : 9" class="celdaVideo">
+                <div ng-repeat="video in videos | limitTo : 12" class="celdaVideo">
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe class="embed-responsive-item" ng-src="{{getIframeSrc(video)}}" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
             <br>
+
             <div class="boxResult panel panel-default">
                 <div class="divImage">
-                    <img src="/images/logo.png">
+                    <img src="/images/flickr.png" alt="Flickr!" title="Flickr">
+                </div>
+                <div class="textIntro">
+                    <h3 class="text-center">Fotografías que pueden ser de tu interés:</h3>
+                </div>
+                <div ng-repeat="foto in flickr | limitTo : 12" class="celdaVideo">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <a href="https://www.flickr.com/photos/{{foto.owner}}/{{foto.id}}" target="_blank">
+                        <img ng-src="https://farm{{foto.farm}}.staticflickr.com/{{foto.server}}/{{foto.id}}_{{foto.secret}}_m.jpg"></a>
+                    </div>
+                    {{foto.title}}
+                </div>
+                
+            </div>
+
+            <br>
+            <div class="boxResult panel panel-default">
+                <div class="divImage">
+                    <img src="/images/logo.png" alt="Califica!" title="Califica los Resultados">
                 </div>
                 <div class="textIntro">
                     <h3 class="text-center">Ayudanos a conocerte mejor! Cuentanos cuáles temas son de tu interés:</h3>
