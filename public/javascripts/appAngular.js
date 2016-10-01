@@ -67,7 +67,7 @@ angular.module('appSLM', ['ui.router', 'ngtweet'])
   									comun.twitterUsers.push(value);
   							})
 						});
-					$http.get("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=fd7fb62030a07d340af641127d464664&tags=" + comun.resultados[i].cat + "&per_page=9&format=json&nojsoncallback=1")
+					$http.get("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=aee4669b8967a28c6ea251f4defeaa67&tags=" + comun.resultados[i].cat + "&per_page=9&format=json&nojsoncallback=1")
 						.success(function(datos) {
 							angular.forEach(datos, function(value, key) {
 								for (var i=0; i < 5; i++){
